@@ -19,7 +19,7 @@
 GWAS_integration <- function(GWAS_file, gene_lists, output_dir, start_pos, interval, interval_jumps, permutations){
 #defaults
 if(missing(output_dir)){
-	output_dir <-  ""
+	output_dir <-  get(wd)
 	}
 
 if(missing(start_pos)){
@@ -78,6 +78,9 @@ File_GWAS <- gene_list[grepl(gene_list, pattern=GWAS_file_parts[length(GWAS_file
 gene_list <- gene_list[grepl(gene_list, pattern=GWAS_file_parts[length(GWAS_file_parts)]) == FALSE]
 setwd(gene_lists)
 
+N_status <- paste("Now exctracting SNPs, this may take some time", "\n\n")
+cat(N_status)
+	
 for(k in gene_list){
     Genes = read.csv(k) #read file from current directory
     Genes[,2] <- as.numeric(as.character(Genes[,2]))
@@ -105,7 +108,8 @@ for(k in gene_list){
 distance = start_pos #reset starting point for search space with new gene file. 
 }
 
-
+setwd(output_dir)
+	
 cat("\nSNP extraction has finished. New qvalues will now be calculated\n \n")
 
 #install.packages("fdrtool")
