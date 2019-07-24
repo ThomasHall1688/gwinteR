@@ -40,12 +40,12 @@ if(missing(permutations)){
 
 
 #making directories 
-SNPpath <- paste0(output_dir, "Extracted_SNPS")
+SNPpath <- paste0(output_dir, "/Extracted_SNPS")
 if (!file.exists(SNPpath)){
   dir.create(SNPpath)
 }
 
-GWASPath <- paste0(output_dir, "Integration_output")
+GWASPath <- paste0(output_dir, "/Integration_output")
 if (!file.exists(GWASPath)){
   dir.create(GWASPath)
 }
