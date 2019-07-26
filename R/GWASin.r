@@ -76,6 +76,8 @@ list.files(gene_lists)
 gene_list <- list.files(gene_lists)
 File_GWAS <- gene_list[grepl(gene_list, pattern=GWAS_file_parts[length(GWAS_file_parts)]) == TRUE]
 gene_list <- gene_list[grepl(gene_list, pattern=GWAS_file_parts[length(GWAS_file_parts)]) == FALSE]
+gene_list <- gene_list[!grepl(gene_list, pattern="Extracted_SNPS")] 
+gene_list <- gene_list[!grepl(gene_list, pattern="Integration_output")]
 setwd(gene_lists)
 
 N_status <- paste("Now exctracting SNPs, this may take some time", "\n\n")
