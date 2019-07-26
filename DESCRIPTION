@@ -10,9 +10,7 @@ Description: This package determines the significance of the distribution of SNP
              The q values for each SNP P value subset and all its permuted equivalents are calculated using the qvalue 
              library in R, a package incorporated into the GWASin library. The subsequent significance level (Pperm) 
              assigned to each of the SNP subsets is equivalent to the proportion of permutations in which at least the 
-             same number of q values < 0.05/0.1 as the SNP subset were obtained, i.e. by chance. 
-             
-             The package will create two directories and output three main data types : Extracted_SNPS which will contain 
+             same number of q values < 0.05/0.1 as the SNP subset were obtained, i.e. by chance. The package will create two directories and output three main data types : Extracted_SNPS which will contain 
              all the SNPs extracted from each gene in single column text files. The second directory will be Integration_output,
              and will contain a text file containing all extracted SNPs with the orginal pvalues and qvalues along side the 
              new permuted qvalues. It will also contain histograms plotting the distributions of SNPs with qvalues < 0.05/0.1.
