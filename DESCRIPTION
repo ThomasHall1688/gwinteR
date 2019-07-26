@@ -1,14 +1,15 @@
 Package: GWASin
 Title: Integrates Genes of Interest with Genome Wide Association Studies 
 Version: 0.0.1
-Authors@R: Thomas Hall
-	         Creator
-	         tjhall1688@gmail.com 
+Authors@R: 
+Thomas Hall
+Creator
+tjhall1688@gmail.com 
   
-           Michael Mullen
-           Creator
-           mmullen@ait.ie
-person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Michael Mullen
+Creator
+mmullen@ait.ie
+
 Description: This package determines the significance of the distribution of SNP nominal P values within 
              and up to (start_pos + (interval X interval_jumps))kb up and downstream to each gene of interest 
              suspected to have an effect on GWAS phenotype. A total of (permutations) random samplings (with replacement) 
@@ -27,6 +28,7 @@ Description: This package determines the significance of the distribution of SNP
              qvalues are by chance (0 - 100%), average number of SNPs per (permutations) set that had a new qvalue < 0.05, 
              amount of SNPs with an original qvalue < 0.1, amount of SNPs with a new qvalue < 0.1, the probability these new
              qvalues are by chance (0 - 100%), average number of SNPs per (permutations) set that had a new qvalue < 0.1. 
+	     
 Depends: R (>= 3.5.2)
 License: What license is it under?
 Encoding: UTF-8
