@@ -1,8 +1,7 @@
 Package: GWASin
 Title: Integrates Genes of Interest with Genome Wide Association Studies 
 Version: 0.0.1
-Authors@R: Thomas Hall Creator tjhall1688@gmail.com 
-Michael Mullen Creator mmullen@ait.ie
+Authors@R: Thomas Hall Creator tjhall1688@gmail.com  Michael Mullen Creator mmullen@ait.ie
 
 Description: This package determines the significance of the distribution of SNP nominal P values within 
              and up to (start_pos + (interval X interval_jumps))kb up and downstream to each gene of interest 
