@@ -19,7 +19,7 @@
 GWAS_integration <- function(GWAS_file, gene_lists, output_dir, start_pos, interval, interval_jumps, permutations){
 #defaults
 if(missing(output_dir)){
-	output_dir <-  get(wd)
+	output_dir <-  getwd()
 	}
 
 if(missing(start_pos)){
