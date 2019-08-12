@@ -182,8 +182,9 @@ for(i in SNP_lists){
 
 
   for(a in 1:permutations){
-    results[[a]]<-qvalue(y[,a], fdr.level = NULL, pi0 = 1)["qval"]
-  }
+    qvalueresults[[a]]<-qvalue(y[,a], fdr.level = NULL, pi0 = 1)
+    results[[a]] <- qvalueresults[[a]]["qvalues"]
+    }
 
 
 
