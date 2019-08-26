@@ -123,7 +123,7 @@ library("qvalue")
 list.files(SNPpath)
 SNP_lists=list.files(SNPpath)
 
-header=paste(c("File ","SNPS_total ","Orig_q<0.05 ","new_q<0.05 ","%prob1000x ","Av_num_qval0.05_per_samp ","Orig_q<0.1 ","new_q<0.1 ","%prob1000x ","Av_num_qval0.1_per_samp"), collapse="")
+header=paste(c("File ","SNPS_total ","Orig_q<0.05 ","new_q<0.05 ","percent_0.05 ","Av_num_qval0.05_per_samp ","Orig_q<0.1 ","new_q<0.1 ","percent_0.1 ","Av_num_qval0.1_per_samp"), collapse="")
 write.table(header, file=sumRes, sep="\t", quote = F, append = TRUE)
 
 for(i in SNP_lists){
