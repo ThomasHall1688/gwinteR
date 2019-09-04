@@ -38,6 +38,9 @@ if(missing(permutations)){
 	permutations <-  1000
 	}
 
+if(permutations < 1000){ 
+	permutations = 1000
+	}
 
 #making directories 
 SNPpath <- paste0(output_dir, "/Extracted_SNPS")
@@ -52,9 +55,9 @@ if (!file.exists(GWASPath)){
 
 
 
-sumRes <- paste0(GWASPath, "/Summary_results.txt")
-M <- paste("Reading GWAS dataset", GWAS_file, "\n\n")
-cat(M)
+sumRes <- paste0(GWASPath, "/Summary_results.csv")
+M_status <- paste("Reading GWAS dataset", GWAS_file, "\n\n")
+cat(M_status)
 SNP_list = read.csv(GWAS_file)
 SNP_list[, 2] <- as.integer(SNP_list[, 2]) #Sometimes the position will import as a factor. This will cause errors. 
 SNP_list$X <- NULL #read.csv can import row.names as col1. Will work on a fix
@@ -82,7 +85,7 @@ setwd(gene_lists)
 
 N_status <- paste("Now exctracting SNPs, this may take some time", "\n\n")
 cat(N_status)
-	
+
 for(k in gene_list){
     Genes = read.csv(k) #read file from current directory
     Genes[,2] <- as.numeric(as.character(Genes[,2]))
@@ -110,8 +113,7 @@ for(k in gene_list){
 distance = start_pos #reset starting point for search space with new gene file. 
 }
 
-setwd(output_dir)
-	
+
 cat("\nSNP extraction has finished. New qvalues will now be calculated\n \n")
 
 #install.packages("fdrtool")
@@ -119,15 +121,16 @@ cat("\nSNP extraction has finished. New qvalues will now be calculated\n \n")
 
 
 library("qvalue")
-
+setwd(SNPpath)
 list.files(SNPpath)
 SNP_lists=list.files(SNPpath)
 
-header=paste(c("File ","SNPS_total ","Orig_q<0.05 ","new_q<0.05 ","percent_0.05 ","Av_num_qval0.05_per_samp ","Orig_q<0.1 ","new_q<0.1 ","percent_0.1 ","Av_num_qval0.1_per_samp"), collapse="")
-write.table(header, file=sumRes, sep="\t", quote = F, append = TRUE)
+header=paste(c("File ","SNPS_total ","Orig_q<0.05 ","new_q<0.05 ","%prob1000x ","Av_num_qval0.05_per_samp ","Orig_q<0.1 ","new_q<0.1 ","%prob1000x ","Av_num_qval0.1_per_samp"), collapse="")
+write.table(header, file=sumRes, sep="\t", quote = F, append = TRUE, col.names = FALSE, row.names = FALSE)
 
 for(i in SNP_lists){
-  setwd(SNPpath)
+  Qvalue_status = paste("calculating qvalues for ", i, "\n")
+  cat(Qvalue_status)
   data=read.table(i, header=FALSE, sep="") #This is the file "gene_snps_100000_ChIP". This is so it will parse through multiple SNP files you make. 
   colnames(data)=c("SNP")
   number_snps=length(data$SNP)
@@ -158,8 +161,9 @@ for(i in SNP_lists){
   fdr=qvalue(pvalue,fdr.level = NULL, pi0 = 1)
 
   qval=as.numeric(fdr$qvalues)
-
-
+  
+  hist(fdr)
+	
   qval2=qval
 
   num_qval_0.05=length(subset(qval2,qval2<0.05))
@@ -177,16 +181,14 @@ for(i in SNP_lists){
 
   y=replicate(permutations,(sample(data_p, number_snps_left, replace=TRUE)))
 
+  qvalueresults<-vector("list", permutations)
   results<-vector("list", permutations)
-
 
 
   for(a in 1:permutations){
     qvalueresults[[a]]<-qvalue(y[,a], fdr.level = NULL, pi0 = 1)
-    results[[a]] <- qvalueresults[[a]]["qvalues"]
-    }
-
-
+	results[[a]] <- qvalueresults[[a]]["qvalues"]
+	}
 
 
 
@@ -216,9 +218,16 @@ for(i in SNP_lists){
 
   number_samplings_0.05_greater=length(greater_num_qval_0.05)
   number_samplings_0.1_greater=length(greater_num_qval_0.1)
+  
+  if(permutations > 1000){ 
+  percent_divider = permutations/100 
+  } else {
+  percent_divider = 10
+  }
 
-  percent_0.05=number_samplings_0.05_greater/10
-  percent_0.1=number_samplings_0.1_greater/10
+
+  percent_0.05=number_samplings_0.05_greater/percent_divider
+  percent_0.1=number_samplings_0.1_greater/percent_divider
 
   total_num_qval_0.05=sum(qvals_0.05)
   total_num_qval_0.1=sum(qvals_0.1)
